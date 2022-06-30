@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import BillModal from '../BillModal/BillModal';
 
 const Home = () => {
+    const [openBillingMOdal, setOpenBillingModal] = useState(false)
+
+    const handleAddNewBill = () => {
+        setOpenBillingModal(true)
+    }
     return (
         <div className='max-w-[1400px] mx-auto'>
             <header class="navbar bg-gray-300">
@@ -25,7 +31,13 @@ const Home = () => {
                     <div class="flex-none gap-2">
                         
                         <div class="">
-                            <button className='btn bth-primary'>Add Item</button>
+                            <label
+                                for="billing-modal"
+                                onClick={handleAddNewBill}
+                                class="btn modal-button">
+                                open modal
+                            </label>
+                            {/* <button className='btn bth-primary'>Add Item</button> */}
                         </div>
                     </div>
                 </div>
@@ -74,6 +86,7 @@ const Home = () => {
                     </table>
                     </div>
             </main>
+            {openBillingMOdal && <BillModal></BillModal>}
         </div>
     );
 };

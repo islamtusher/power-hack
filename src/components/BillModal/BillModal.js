@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
-
-const BillModal = () => {
+import { toast } from 'react-toastify';
+const BillModal = ({setOpenBillingModal, refetch}) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     // Handle submit the add bill form
@@ -17,6 +16,11 @@ const BillModal = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                if (data.acknowledged === true) {
+                    setOpenBillingModal(false)
+                    refetch()
+                    toast('New Bill Add Successfully')
+                }
             })
     }
 
@@ -95,7 +99,7 @@ const BillModal = () => {
                             <input
                                 type='number'
                                 className="input input-bordered focus:outline-0 focus:border-primary w-full  "
-                                {...register("amount", {
+                                {...register("paidAmount", {
                                     required: {
                                         value: true,
                                         message: 'Amount Must Required'
@@ -107,9 +111,9 @@ const BillModal = () => {
                                     
                                 })}
                             />
-                            {errors?.amount?.type === 'required' && <p className='text-red-500'>{errors?.amount?.message}</p>}
-                            {errors?.amount?.type === 'minLength' && <p className='text-red-500'>{errors?.amount?.message}</p>}
-                            {errors?.amount?.type === 'positive' && <p className='text-red-500'>{errors?.amount?.message}</p>}
+                            {errors?.paidAmount?.type === 'required' && <p className='text-red-500'>{errors?.paidAmount?.message}</p>}
+                            {errors?.paidAmount?.type === 'minLength' && <p className='text-red-500'>{errors?.paidAmount?.message}</p>}
+                            {errors?.paidAmount?.type === 'positive' && <p className='text-red-500'>{errors?.paidAmount?.message}</p>}
                             
                         </div>
 
@@ -118,6 +122,7 @@ const BillModal = () => {
                     </form> 
                 </div>
             </div>
+            
         </div>
     );
 };

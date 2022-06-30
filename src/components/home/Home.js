@@ -7,7 +7,7 @@ const Home = () => {
     const [openBillingMOdal, setOpenBillingModal] = useState(false)
 
     const { isLoading, error, data } = useQuery('billdata', () =>
-        fetch('billingData.json')
+        fetch('http://localhost:5000/bills')
             .then(res => res.json())
     )
     if (isLoading) {
@@ -59,13 +59,12 @@ const Home = () => {
                         {/* <!-- head --> */}
                         <thead>
                             <tr className='text-center'>
-                                <th></th>
+                                <th>Bill Id</th>
                                 <th>Name</th>
-                                <th>Job</th>
-                                <th>Favorite Color</th>
-                                <th>Favorite Color</th>
-                                <th>Favorite Color</th>
-                                <th>Favorite Color</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Paid Amount</th>
+                                <th>Manage Bill</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,12 +72,11 @@ const Home = () => {
                             {
                                 data?.map(data =>
                                     <tr className=''>
-                                        <th >1</th>
-                                        <td className='border border-l-2'></td>
-                                        <td className='border border-l-2'></td>
-                                        <td className='border border-l-2'></td>
-                                        <td className='border border-l-2'></td>
-                                        <td className='border border-l-2'></td>
+                                        <th >{data?._id}</th>
+                                        <td className='border border-l-2'>{data?.fullName}</td>
+                                        <td className='border border-l-2'>{data?.email}</td>
+                                        <td className='border border-l-2'>{data?.phone}</td>
+                                        <td className='border border-l-2'>{data?.paidAmount}</td>
                                         <td className='border border-l-2 flex justify-evenly items-center'>
                                             <button className='btn btn-primary'>Edit</button>
                                             <span className='text-3xl'>|</span>

@@ -7,6 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
     const [openBillingMOdal, setOpenBillingModal] = useState(false)
+    const [isUpdate, setIsUpdate] = useState(false)
+    const [updateId, setUpdateId] = useState(false)
+
 
     const { isLoading, error, data, refetch } = useQuery('billdata', () =>
         fetch('http://localhost:5000/bills')
@@ -21,6 +24,16 @@ const Home = () => {
     // handle Add new bill button
     const handleAddNewBill = () => {
         setOpenBillingModal(true)
+        setIsUpdate(false)
+        setUpdateId(null)
+
+    }
+
+    // handleUpdateBill
+    const handleUpdateBill = (id) => {
+        setOpenBillingModal(true)
+        setIsUpdate(true)
+        setUpdateId(id)
     }
 
     // handle delete button 
@@ -91,13 +104,23 @@ const Home = () => {
                             {
                                 data?.map(data =>
                                     <tr className=''>
-                                        <th >{data?._id}</th>
+                                        <th >
+                                            {
+                                                isLoading ? 'Generating Id' : `${data?._id}`
+                                            }
+                                        </th>
                                         <td className='border border-l-2'>{data?.fullName}</td>
                                         <td className='border border-l-2'>{data?.email}</td>
                                         <td className='border border-l-2'>{data?.phone}</td>
                                         <td className='border border-l-2'>{data?.paidAmount}</td>
                                         <td className='border border-l-2 flex justify-evenly items-center'>
-                                            <button className='btn btn-primary'>Edit</button>
+                                            {/* <button onClick={()=> handleUpdateBill(data?._id)} className='btn btn-primary'>Edit</button> */}
+                                            <label
+                                                for="billing-modal"
+                                                onClick={()=> handleUpdateBill(data?._id)}
+                                                className="btn modal-button">
+                                                Edit
+                                            </label>
                                             <span className='text-3xl'>|</span>
                                             <button onClick={()=> handleDeleteBill(data?._id)} className='btn bg-red-600'>Delete</button>
                                         </td>
@@ -110,7 +133,7 @@ const Home = () => {
                     </table>
                     </div>
             </main>
-            {openBillingMOdal && <BillModal setOpenBillingModal={setOpenBillingModal} refetch={refetch}></BillModal>}
+            {openBillingMOdal && <BillModal updateId={updateId} isUpdate={isUpdate} setOpenBillingModal={setOpenBillingModal} refetch={refetch}></BillModal>}
             <ToastContainer></ToastContainer>
         </div>
     );

@@ -1,13 +1,38 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-const BillModal = ({setOpenBillingModal, refetch}) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const BillModal = ({setOpenBillingModal, refetch, isUpdate, updateId}) => {
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     // Handle submit the add bill form
     const onSubmit = formData => {
-        fetch('http://localhost:5000/addBill', {
-            method: 'POST',
+        console.log(updateId);
+        
+        // if requst for post new bill
+        if (!isUpdate) {
+            fetch('http://localhost:5000/addBill', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.acknowledged === true) {
+                        setOpenBillingModal(false)
+                        refetch()
+                        reset()
+                        toast('New Bill Add Successfully')
+                    }
+                })
+            return
+        }
+
+        // if requst for update a old bill
+        fetch(`http://localhost:5000/updateBill/${updateId}`, {
+            method: 'PATCH',
             headers: {
                 'Content-type': 'application/json'
             },
@@ -19,9 +44,12 @@ const BillModal = ({setOpenBillingModal, refetch}) => {
                 if (data.acknowledged === true) {
                     setOpenBillingModal(false)
                     refetch()
+                    reset()
                     toast('New Bill Add Successfully')
                 }
             })
+
+
     }
 
     return (
@@ -117,7 +145,7 @@ const BillModal = ({setOpenBillingModal, refetch}) => {
                             
                         </div>
 
-                        <button  type='submit' className="btn bg-primary hover:bg-white hover:text-accent w-[100px] mt-6 mb-2" >Submit</button>
+                        <button  type='submit' className="btn bg-primary hover:bg-white hover:text-accent w-[100px] mt-6 mb-2" >{isUpdate ? 'Update' : 'Submit'}</button>
                        
                     </form> 
                 </div>

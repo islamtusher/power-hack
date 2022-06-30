@@ -13,8 +13,8 @@ const Home = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
-    console.log(data);
-    console.log(error);
+    // console.log(data);
+    // console.log(error);
     const handleAddNewBill = () => {
         setOpenBillingModal(true)
     }
@@ -52,7 +52,7 @@ const Home = () => {
                     </div>
                 </div>
                 {/* table */}
-
+                <p>datas: {data?.length}</p>
                 <div className="overflow-x-auto mt-8">
                     <table className="table table-zebra w-[95%] mx-auto">
                         {/* <!-- head --> */}

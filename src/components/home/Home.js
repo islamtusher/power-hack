@@ -46,9 +46,8 @@ const Home = () => {
                                 for="billing-modal"
                                 onClick={handleAddNewBill}
                                 className="btn modal-button">
-                                open modal
+                                Add New Bill
                             </label>
-                            {/* <button className='btn bth-primary'>Add Item</button> */}
                         </div>
                     </div>
                 </div>

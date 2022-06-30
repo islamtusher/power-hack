@@ -48,17 +48,25 @@ const BillModal = ({setOpenBillingModal, refetch, isUpdate, updateId}) => {
                     toast('New Bill Add Successfully')
                 }
             })
+    }
 
-
+    // handle close modal
+    const handleCloseModal = () => {
+        reset()
     }
 
     return (
         <div>
+            
+            
             <input type="checkbox" id="billing-modal" class="modal-toggle " />
             <div class="modal ">
                 <div class="modal-box relative">
-                    <label for="billing-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label onClick={handleCloseModal} for="billing-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center mt-4'>
+                        {
+                            isUpdate? <h1 className='text-dark'> Make Some Update</h1> : <h1 className='text-dark'>Add An New Bill</h1>
+                        }
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text text-lg">Name</span>

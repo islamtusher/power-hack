@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { toast, ToastContainer } from 'react-toastify';
 import BillModal from '../BillModal/BillModal';
@@ -9,16 +9,27 @@ const Home = () => {
     const [openBillingMOdal, setOpenBillingModal] = useState(false)
     const [isUpdate, setIsUpdate] = useState(false)
     const [updateId, setUpdateId] = useState(false)
+    const [pages, setPages] = useState(0)
+    const [currentPage, setCurrentPage] = useState(0)
 
-
-    const { isLoading, error, data, refetch } = useQuery('billdata', () =>
-        fetch('http://localhost:5000/bills')
-            .then(res => res.json())
+    console.log(currentPage);
+    const { isLoading, error, data, refetch } = useQuery(['billdata', currentPage], () =>
+        fetch(`http://localhost:5000/bills?currentPage=${currentPage}`)
+        .then(res => res.json())
     )
+
+    useEffect(() => {
+        fetch('http://localhost:5000/billsCount')
+            .then(res => res.json())
+            .then(data => {
+                const page = Math.ceil(data.result/10)
+                setPages(page)
+        })
+    }, [data])
+    
     if (isLoading) {
         return <Loading></Loading>
     }
-    console.log(data);
     // console.log(error);
 
     // handle Add new bill button
@@ -109,7 +120,7 @@ const Home = () => {
                                                 isLoading ? 'Generating Id' : `${data?._id}`
                                             }
                                         </th>
-                                        <td className='border border-l-2'>{data?.fullName}</td>
+                                        <td className='border border-l-2'>{data?.name}</td>
                                         <td className='border border-l-2'>{data?.email}</td>
                                         <td className='border border-l-2'>{data?.phone}</td>
                                         <td className='border border-l-2'>{data?.paidAmount}</td>
@@ -133,6 +144,16 @@ const Home = () => {
                     </table>
                     </div>
             </main>
+            {
+               
+                [...Array(pages).keys()].map(page =>
+                    <button
+                        onClick={() => setCurrentPage(page)}
+                        className={`mr-4 ${page === currentPage ? 'btn btn-primary' : 'btn bg-dark'}`}>
+                        {page}
+                    </button>)
+            }
+            
             {openBillingMOdal && <BillModal updateId={updateId} isUpdate={isUpdate} setOpenBillingModal={setOpenBillingModal} refetch={refetch}></BillModal>}
             <ToastContainer></ToastContainer>
         </div>

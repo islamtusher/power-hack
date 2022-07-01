@@ -13,7 +13,6 @@ const Home = () => {
     const [pages, setPages] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
 
-    console.log(currentPage);
     const { isLoading, error, data, refetch } = useQuery(['billdata', currentPage, pages], () =>
         fetch(`http://localhost:5000/api/billing-list?currentPage=${currentPage}`)
         .then(res => res.json())

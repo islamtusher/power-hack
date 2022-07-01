@@ -18,7 +18,7 @@ const Home = () => {
         .then(res => res.json())
     )
     // console.log(data);
-    fetch('https://friendly-moose-61429.herokuapp.com/billsCount')
+    fetch('https://friendly-moose-61429.herokuapp.com/billsCount',)
         .then(res => res.json())
         .then(data => {
             const page = Math.ceil(data.result/10)

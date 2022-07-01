@@ -11,7 +11,7 @@ const Login = () => {
     const navegate = useNavigate()
 
     const onSubmit = formData => {   
-        fetch(`http://localhost:5000/api/login?email=${formData.email}&password=${formData.password}`)
+        fetch(`https://friendly-moose-61429.herokuapp.com/api/login?email=${formData.email}&password=${formData.password}`)
             .then(res => {
                 console.log(res);
                 if (res.status === 200) {

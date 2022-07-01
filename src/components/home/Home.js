@@ -14,7 +14,7 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(0)
 
     const { isLoading, error, data, refetch } = useQuery(['billdata', currentPage, pages], () =>
-        fetch(`http://localhost:5000/api/billing-list?currentPage=${currentPage}`)
+        fetch(`https://friendly-moose-61429.herokuapp.com/api/billing-list?currentPage=${currentPage}`)
         .then(res => res.json())
     )
     // console.log(data);

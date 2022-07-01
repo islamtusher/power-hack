@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import Navbar from '../navbar/Navbar';
 
 const SignUp = () => {
@@ -18,7 +19,8 @@ const SignUp = () => {
                 .then(data => {
                     console.log(data);
                     if (data.acknowledged === true) {
-                        
+                        reset()
+                        toast.success('Sign Up successfull')
                     }
                 })
     }

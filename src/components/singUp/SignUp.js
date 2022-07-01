@@ -7,8 +7,8 @@ const SignUp = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = formData => {   
-        console.log(formData);
-        fetch('https://friendly-moose-61429.herokuapp.com/api/registration', {
+        // console.log(formData);
+        fetch('http://localhost:5000/api/registration', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -18,9 +18,10 @@ const SignUp = () => {
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
-                    if (data.acknowledged === true) {
+                    if (data[0].acknowledged === true) {
                         reset()
                         toast.success('Sign Up successfull')
+                        localStorage.setItem('accessToken', data[1].accessToken)
                     }
                 })
     }

@@ -13,7 +13,7 @@ const Home = () => {
     const [pages, setPages] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
 
-    const { isLoading, error, data, refetch } = useQuery(['billdata', currentPage, pages], () =>
+    const { isLoading, error, data, refetch } = useQuery(['billdata', currentPage], () =>
         fetch(`https://friendly-moose-61429.herokuapp.com/api/billing-list?currentPage=${currentPage}`)
         .then(res => res.json())
     )

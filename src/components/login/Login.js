@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Navbar from '../navbar/Navbar';
 
 const Login = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const [userLogedIn, setUserLogedIn] = useState(0)
+    const [loginErrorMessage, setLoginErrorMessage] = useState('')
+    const navegate = useNavigate()
 
     const onSubmit = formData => {   
+        fetch(`http://localhost:5000/api/login?email=${formData.email}&password=${formData.password}`)
+            .then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    setUserLogedIn(userLogedIn)
+                    reset()
+                    toast.success('Sign Up successfull')
+                    navegate('/')
+                }
+                else {
+                    // setLoginErrorMessage()
+                    toast('Please Provide valid email and password')
+                }
+                return res.json()
+            })
+            .then(data => {
+                console.log(data);
+            })
     }
 
     return (

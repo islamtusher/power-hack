@@ -6,11 +6,9 @@ const BillModal = ({setOpenBillingModal, refetch, isUpdate, updateId}) => {
 
     // Handle submit the add bill form
     const onSubmit = formData => {
-        console.log(updateId);
-        
         // if requst for post new bill
         if (!isUpdate) {
-            fetch('http://localhost:5000/addBill', {
+            fetch('http://localhost:5000/api/add-billing', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -21,17 +19,18 @@ const BillModal = ({setOpenBillingModal, refetch, isUpdate, updateId}) => {
                 .then(data => {
                     console.log(data);
                     if (data.acknowledged === true) {
+                        
                         setOpenBillingModal(false)
                         refetch()
                         reset()
-                        toast('New Bill Add Successfully')
+                        toast.success('New Bill Add Successfully')
                     }
                 })
             return
         }
 
         // if requst for update a old bill
-        fetch(`http://localhost:5000/updateBill/${updateId}`, {
+        fetch(`http://localhost:5000/api/update-billing/${updateId}`, {
             method: 'PATCH',
             headers: {
                 'Content-type': 'application/json'
@@ -40,12 +39,11 @@ const BillModal = ({setOpenBillingModal, refetch, isUpdate, updateId}) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.acknowledged === true) {
                     setOpenBillingModal(false)
                     refetch()
                     reset()
-                    toast('New Bill Add Successfully')
+                    toast.success('Bill Update Successfully')
                 }
             })
     }

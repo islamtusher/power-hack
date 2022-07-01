@@ -8,7 +8,7 @@ const BillModal = ({setOpenBillingModal, refetch, isUpdate, updateId}) => {
     const onSubmit = formData => {
         // if requst for post new bill
         if (!isUpdate) {
-            fetch('http://localhost:5000/api/add-billing', {
+            fetch('https://friendly-moose-61429.herokuapp.com/api/add-billing', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -30,7 +30,7 @@ const BillModal = ({setOpenBillingModal, refetch, isUpdate, updateId}) => {
         }
 
         // if requst for update a old bill
-        fetch(`http://localhost:5000/api/update-billing/${updateId}`, {
+        fetch(`https://friendly-moose-61429.herokuapp.com/api/update-billing/${updateId}`, {
             method: 'PATCH',
             headers: {
                 'Content-type': 'application/json'

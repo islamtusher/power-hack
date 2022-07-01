@@ -18,7 +18,7 @@ const Home = () => {
         .then(res => res.json())
     )
     // console.log(data);
-    fetch('http://localhost:5000/billsCount')
+    fetch('https://friendly-moose-61429.herokuapp.com/billsCount')
         .then(res => res.json())
         .then(data => {
             const page = Math.ceil(data.result/10)
@@ -52,7 +52,7 @@ const Home = () => {
 
     // handle delete button 
     const handleDeleteBill =(id) => {
-        fetch(`http://localhost:5000/api/delete-billing/${id}`, {
+        fetch(`https://friendly-moose-61429.herokuapp.com/api/delete-billing/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

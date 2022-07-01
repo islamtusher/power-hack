@@ -8,7 +8,7 @@ const SignUp = () => {
 
     const onSubmit = formData => {   
         console.log(formData);
-        fetch('http://localhost:5000/api/registration', {
+        fetch('https://friendly-moose-61429.herokuapp.com/api/registration', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
